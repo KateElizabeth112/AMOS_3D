@@ -12,7 +12,7 @@ def main():
 
     for n in names:
         if n.endswith(".nii.gz"):
-            if not (n.split(".")[0][-1] == '0'):
+            if not (n.split("_")[2][0] == '0'):
                 root = n.split(".")[0]
                 n_new = root + "_0000.nii.gz"
 
