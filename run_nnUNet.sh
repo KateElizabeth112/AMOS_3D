@@ -4,7 +4,8 @@
 source venv/bin/activate
 
 # Set environment variables
-ROOT_DIR='/Users/katecevora/Documents/PhD/data/AMOS_3D/'
+#ROOT_DIR='/Users/katecevora/Documents/PhD/data/AMOS_3D/'
+ROOT_DIR='/vol/biomedic3/kc2322/data/AMOS_3D'
 
 export nnUNet_raw=$ROOT_DIR"nnUNet_raw"
 export nnUNet_preprocessed=$ROOT_DIR"nnUNet_preprocessed"
@@ -21,4 +22,4 @@ echo $nnUNet_results
 nnUNetv2_plan_and_preprocess -d 200 --verify_dataset_integrity
 
 # Train
-nnUNetv2_train 200 3d_fullres 0
+#nnUNetv2_train 200 3d_fullres 0
