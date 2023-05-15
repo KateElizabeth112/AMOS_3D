@@ -44,7 +44,7 @@ file_ending = ".nii.gz"
 generate_dataset_json(str(output_dir),
                       channel_names,
                       labels,
-                      TC,
+                      int(TC),
                       file_ending)
 
 
