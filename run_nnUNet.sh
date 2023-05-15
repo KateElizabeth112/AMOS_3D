@@ -5,7 +5,7 @@ source venv/bin/activate
 
 # Set environment variables
 #ROOT_DIR='/Users/katecevora/Documents/PhD/data/AMOS_3D/'
-ROOT_DIR='/vol/biomedic3/kc2322/data/AMOS_3D'
+ROOT_DIR='/vol/biomedic3/kc2322/data/AMOS_3D/'
 
 export nnUNet_raw=$ROOT_DIR"nnUNet_raw"
 export nnUNet_preprocessed=$ROOT_DIR"nnUNet_preprocessed"
