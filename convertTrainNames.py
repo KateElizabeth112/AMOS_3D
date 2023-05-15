@@ -2,7 +2,7 @@
 import os
 
 #ROOT_DIR = '/Users/katecevora/Documents/PhD/data/AMOS_3D/'
-ROOT_DIR = '/vol/biomedic3/kc2322/code/AMOS_3D'
+ROOT_DIR = '/vol/biomedic3/kc2322/data/AMOS_3D'
 TRAIN_DIR = os.path.join(ROOT_DIR, "nnUNet_raw/Dataset200_AMOS/imagesTr")
 
 
