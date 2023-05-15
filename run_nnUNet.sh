@@ -22,4 +22,4 @@ echo $nnUNet_results
 nnUNetv2_plan_and_preprocess -d 200 --verify_dataset_integrity
 
 # Train
-#nnUNetv2_train 200 3d_fullres 0
+nnUNetv2_train 200 3d_fullres 0
