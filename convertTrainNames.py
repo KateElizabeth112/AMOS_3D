@@ -10,8 +10,12 @@ def main():
     # list files in training directory
     names = os.listdir(TRAIN_DIR)
 
+    # count of training cases
+    count = 0
+
     for n in names:
         if n.endswith(".nii.gz"):
+            count += 1
             try:
                 n.split("_")[2][0]
             except:
@@ -20,6 +24,7 @@ def main():
 
                 os.rename(os.path.join(TRAIN_DIR, n), os.path.join(TRAIN_DIR, n_new))
 
+    print("Number of training cases: {}".format(count))
 
 if __name__ == "__main__":
     main()
