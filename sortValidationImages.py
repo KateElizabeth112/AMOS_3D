@@ -4,7 +4,7 @@ import os
 import nibabel as nib
 
 #root_dir = '/Users/katecevora/Documents/PhD'
-root_dir = 'vol/biomedic3/kc2322/'
+root_dir = '/vol/biomedic3/kc2322/'
 
 img_dir_in = os.path.join(root_dir, 'data/AMOS_3D/nnUNet_raw/Dataset200_AMOS/imagesVa')
 lab_dir_in = os.path.join(root_dir, 'data/AMOS_3D/nnUNet_raw/Dataset200_AMOS/labelsVa')
