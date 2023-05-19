@@ -1,4 +1,4 @@
-/#!/bin/bash
+#!/bin/bash
 # Example of running python script in a batch mode
 #SBATCH -c 4 # Number of CPU Cores
 #SBATCH -p gpushigh # Partition (queue)
