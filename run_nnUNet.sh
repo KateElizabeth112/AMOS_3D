@@ -1,4 +1,4 @@
-#!/bin/bash
+/#!/bin/bash
 # Example of running python script in a batch mode
 #SBATCH -c 4 # Number of CPU Cores
 #SBATCH -p gpushigh # Partition (queue)
@@ -28,4 +28,10 @@ echo $nnUNet_results
 #nnUNetv2_plan_and_preprocess -d 200 --verify_dataset_integrity
 
 # Train
-nnUNetv2_train 200 2d 0
+#nnUNetv2_train 200 2d 0
+
+# Inference
+INPUT_FOLDER=$ROOT_DIR"nnUNet_raw/Dataset200_AMOS/imagesVa"
+OUTPUT_FOLDER=$ROOT_ROOT_DIR"inference/predsVa"
+
+nnUNetv2_predict -i $INPUT_FOLDER -o $OUTPUT_FOLDER -d 200 -c 2d
