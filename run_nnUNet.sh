@@ -32,6 +32,9 @@ echo $nnUNet_results
 
 # Inference
 INPUT_FOLDER=$ROOT_DIR"nnUNet_raw/Dataset200_AMOS/imagesVaSorted"
-OUTPUT_FOLDER=$ROOT_ROOT_DIR"inference/predsVa"
+OUTPUT_FOLDER=$ROOT_ROOT_DIR"inference/preds"
 
-nnUNetv2_predict -i $INPUT_FOLDER -d 200 -c 2d -f 0 --verbose
+echo $INPUT_FOLDER
+echo $OUTPUT_FOLDER
+
+nnUNetv2_predict -i $INPUT_FOLDER -o $OUTPUT_FOLDER -d 200 -c 2d -f 0 --verbose
