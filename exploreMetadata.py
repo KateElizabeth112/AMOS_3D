@@ -25,6 +25,19 @@ tr_size_half = tr_size / 2
 ts_size_half = 51
 
 
+def list_train_images():
+    images = os.listdir(input_images_folder)
+    ids = []
+    for img in images:
+        id = img[5:9]
+        ids.append(int(id.lstrip('0')))
+
+    # save
+    f = open(os.path.join(output_folder, "tr_ids.pkl"), "wb")
+    pkl.dump(ids, f)
+    f.close()
+
+
 def generate_sets(meta_path):
     # Extract relevant meta data and create numpy arrays of male and female IDs
     meta = pd.read_csv(meta_path)
@@ -119,7 +132,7 @@ def copy_images(dataset_name, ids_tr, ids_ts):
         shutil.copyfile(os.path.join(input_labels_folder, lab_name), os.path.join(output_labelsTs, lab_name))
 
 
-def main():
+def sort_sets():
     # Sort the case IDs according to the sets
     # Set1
     f = open(os.path.join(splits_folder, "set1_splits.pkl"), "rb")
@@ -153,6 +166,10 @@ def main():
 
     print("Working on Set 1....")
     copy_images("Dataset703_Set3", ids_tr, ids_ts)
+
+
+def main():
+    list_train_images()
 
 
 if __name__ == "__main__":
