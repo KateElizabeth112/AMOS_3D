@@ -43,7 +43,7 @@ def generate_sets(meta_path):
     ids_f_orig = np.array(meta[meta["Patient's Sex"] == "F"]["amos_id"].values)
 
     # keep only the ids that have both an image and label (original training set)
-    f = open(os.path.join(output_folder, "tr_ids.pkl"), "rb")
+    f = open(os.path.join(input_folder, "tr_ids.pkl"), "rb")
     ids = pkl.load(f)
     f.close()
 
