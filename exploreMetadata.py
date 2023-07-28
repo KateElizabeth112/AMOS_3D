@@ -13,7 +13,7 @@ if local:
     splits_folder = os.path.join(data_dir, "splits")
 else:
     input_folder = "/vol/biomedic3/kc2322/data/AMOS_3D/nnUNet_raw/Dataset200_AMOS"
-    meta_data_path = os.path.join(input_folder, "labeled_data_meta_0000_0599.csv")
+    meta_data_path = os.path.join("/vol/biomedic3/kc2322/data/AMOS_3D", "labeled_data_meta_0000_0599.csv")
     input_images_folder = os.path.join(input_folder, "imagesTr")
     input_labels_folder = os.path.join(input_folder, "labelsTr")
 
