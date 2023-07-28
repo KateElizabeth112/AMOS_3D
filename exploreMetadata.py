@@ -17,7 +17,7 @@ else:
     input_images_folder = os.path.join(input_folder, "imagesTr")
     input_labels_folder = os.path.join(input_folder, "labelsTr")
 
-    output_folder = "/vol/biomedic3/kc2322/data/AMOS_3D/nnUNet_raw/Dataset200_AMOS"
+    output_folder = "/vol/biomedic3/kc2322/data/AMOS_3D/nnUNet_raw/"
     splits_folder = os.path.join("/vol/biomedic3/kc2322/data/AMOS_3D", "splits")
 
 
