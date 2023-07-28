@@ -30,8 +30,8 @@ def list_train_images():
     ids = []
     for img in images:
         if img.endswith(".nii.gz"):
-            print(id)
             id = img[5:9]
+            print(id)
             ids.append(int(id.lstrip('0')))
 
     # save
