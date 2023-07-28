@@ -81,10 +81,17 @@ def copy_images(dataset_name, ids_tr, ids_ts):
 
     # copy over the files from Training Set
     for case in list(ids_tr):
-        print("Case {}".format(case))
-        img_name = "case_" + case[1:] + "_0000.nii.gz"
-        lab_name = "case_" + case[1:] + ".nii.gz"
+        # pad the id if necessary
+        id = str(case)
+        id_len = len(id)
+        if id_len < 4:
+            for j in range(4 - id_len):
+                id = "0" + id
 
+        print("Case {}".format(id))
+
+        img_name = "amos_" + id + "_0000.nii.gz"
+        lab_name = "amos_" + id + ".nii.gz"
         # Copy across images
         shutil.copyfile(os.path.join(input_images_folder, img_name), os.path.join(output_imagesTr, img_name))
 
@@ -93,8 +100,17 @@ def copy_images(dataset_name, ids_tr, ids_ts):
 
     # copy over the files from Test Set
     for case in list(ids_ts):
-        img_name = "case_" + case[1:] + "_0000.nii.gz"
-        lab_name = "case_" + case[1:] + ".nii.gz"
+        # pad the id if necessary
+        id = str(case)
+        id_len = len(id)
+        if id_len < 4:
+            for j in range(4 - id_len):
+                id = "0" + id
+
+        print("Case {}".format(id))
+
+        img_name = "amos_" + id + "_0000.nii.gz"
+        lab_name = "amos_" + id + ".nii.gz"
 
         # Copy across images
         shutil.copyfile(os.path.join(input_images_folder, img_name), os.path.join(output_imagesTs, img_name))
