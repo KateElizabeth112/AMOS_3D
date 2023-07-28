@@ -58,6 +58,9 @@ def generate_sets(meta_path):
             # remove from list of useable ids
             ids_f.append(id)
 
+    ids_m = np.array(ids_m)
+    ids_f = np.array(ids_f)
+
     # Figure out our training and test set sizes
     num_m = ids_m.shape[0]
     num_f = ids_f.shape[0]
