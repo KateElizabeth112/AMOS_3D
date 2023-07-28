@@ -21,9 +21,6 @@ echo $nnUNet_raw
 echo $nnUNet_preprocessed
 echo $nnUNet_results
 
-# Run script to generate dataset json
-#python3 generateDatasetJson.py -r $ROOT_DIR -n $DS -t $TASK
-
 # Plan and preprocess data
 #nnUNetv2_plan_and_preprocess -d 200 --verify_dataset_integrity
 
@@ -32,7 +29,7 @@ echo $nnUNet_results
 
 # Inference
 INPUT_FOLDER=$ROOT_DIR"nnUNet_raw/Dataset200_AMOS/imagesVaSorted"
-OUTPUT_FOLDER=$ROOT_ROOT_DIR"inference/preds"
+OUTPUT_FOLDER=$ROOT_ROOT"inference/preds"
 
 echo $INPUT_FOLDER
 echo $OUTPUT_FOLDER

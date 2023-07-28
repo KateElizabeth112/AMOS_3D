@@ -68,8 +68,8 @@ def generate_sets(meta_path):
     print("Number of males: {}".format(num_m))
     print("Number of females: {}".format(num_f))
 
-    ts_size = 60
-    tr_size = int(2 * int(num_f) - ts_size)
+    ts_size = 40
+    tr_size = int(num_f) - int(ts_size / 2)
 
     print("Training set size: {}".format(tr_size))
     print("Test set size: {}".format(ts_size))
