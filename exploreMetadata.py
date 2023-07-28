@@ -20,11 +20,6 @@ else:
     splits_folder = os.path.join("/vol/biomedic3/kc2322/data/AMOS_3D", "splits")
 
 
-tr_size = 180
-tr_size_half = tr_size / 2
-ts_size_half = 51
-
-
 def list_train_images():
     images = os.listdir(input_images_folder)
     ids = []
@@ -46,14 +41,37 @@ def generate_sets(meta_path):
     ids_m = np.array(meta[meta["Patient's Sex"] == "M"]["amos_id"].values)
     ids_f = np.array(meta[meta["Patient's Sex"] == "F"]["amos_id"].values)
 
+    # keep only the ids that have both an image and label (original training set)
+    f = open(os.path.join(output_folder, "tr_ids.pkl"), "rb")
+    ids = pkl.load(f)
+    f.close()
+
+    for id in list(ids):
+        if id in ids_m:
+            # remove from list of useable ids
+            ids_m = np.delete(ids_m, np.where(ids_m == id))
+        else:
+            # remove from list of useable ids
+            ids_f = np.delete(ids_f, np.where(ids_f == id))
+
+    # Figure out our training and test set sizes
+    num_m = ids_m.shape[0]
+    num_f = ids_f.shape[0]
+
+    print("Number of males: {}".format(num_m))
+    print("Number of females: {}".format(num_f))
+
+    ts_size = 80
+    tr_size = 2 * int(num_f) - ts_size
+
+    ids_tr_m = ids_m[:tr_size]
+    ids_ts_m = ids_m[tr_size:tr_size + ts_size / 2]
+    ids_tr_f = ids_f[:tr_size]
+    ids_ts_f = ids_f[tr_size:]
+
     # randomly shuffle indices
     np.random.shuffle(ids_m)
     np.random.shuffle(ids_f)
-
-    ids_tr_m = ids_m[:tr_size]
-    ids_ts_m = ids_m[tr_size:tr_size + ts_size_half]
-    ids_tr_f = ids_f[:tr_size]
-    ids_ts_f = ids_f[tr_size:]
 
     ids_ts = np.concatenate((ids_ts_f, ids_ts_m), axis=0)
 
@@ -171,7 +189,8 @@ def sort_sets():
 
 
 def main():
-    list_train_images()
+    #list_train_images()
+    generate_sets()
 
 
 if __name__ == "__main__":
