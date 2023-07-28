@@ -39,21 +39,24 @@ def list_train_images():
 def generate_sets(meta_path):
     # Extract relevant meta data and create numpy arrays of male and female IDs
     meta = pd.read_csv(meta_path)
-    ids_m = np.array(meta[meta["Patient's Sex"] == "M"]["amos_id"].values)
-    ids_f = np.array(meta[meta["Patient's Sex"] == "F"]["amos_id"].values)
+    ids_m_orig = np.array(meta[meta["Patient's Sex"] == "M"]["amos_id"].values)
+    ids_f_orig = np.array(meta[meta["Patient's Sex"] == "F"]["amos_id"].values)
 
     # keep only the ids that have both an image and label (original training set)
     f = open(os.path.join(output_folder, "tr_ids.pkl"), "rb")
     ids = pkl.load(f)
     f.close()
 
+    ids_m = []
+    ids_f = []
+
     for id in list(ids):
-        if id in ids_m:
-            # remove from list of useable ids
-            ids_m = np.delete(ids_m, np.where(ids_m == id))
+        if id in ids_m_orig:
+            # add to list of useable ids
+            ids_m.append(id)
         else:
             # remove from list of useable ids
-            ids_f = np.delete(ids_f, np.where(ids_f == id))
+            ids_f.append(id)
 
     # Figure out our training and test set sizes
     num_m = ids_m.shape[0]
@@ -194,7 +197,7 @@ def sort_sets():
 
 def main():
     #list_train_images()
-    #generate_sets(meta_data_path)
+    generate_sets(meta_data_path)
     sort_sets()
 
 
