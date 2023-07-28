@@ -194,7 +194,8 @@ def sort_sets():
 
 def main():
     #list_train_images()
-    generate_sets(meta_data_path)
+    #generate_sets(meta_data_path)
+    sort_sets()
 
 
 if __name__ == "__main__":
