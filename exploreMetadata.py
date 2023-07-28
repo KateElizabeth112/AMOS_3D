@@ -29,8 +29,10 @@ def list_train_images():
     images = os.listdir(input_images_folder)
     ids = []
     for img in images:
-        id = img[5:9]
-        ids.append(int(id.lstrip('0')))
+        if img.endswith(".nii.gz"):
+            print(id)
+            id = img[5:9]
+            ids.append(int(id.lstrip('0')))
 
     # save
     f = open(os.path.join(output_folder, "tr_ids.pkl"), "wb")
