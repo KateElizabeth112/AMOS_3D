@@ -7,8 +7,8 @@ import os
 parser = argparse.ArgumentParser(description="Just an example",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-r", "--root_dir", default='/Users/katecevora/Documents/PhD/data/AMOS_3D', help="Root directory for nnUNet")
-parser.add_argument("-n", "--dataset_name", default='Dataset200_AMOS', help="Name of the dataset")
-parser.add_argument("-tc", "--training_cases", default=3)
+parser.add_argument("-n", "--dataset_name", default='Dataset701_Task1', help="Name of the dataset")
+parser.add_argument("-tc", "--training_cases", default=120)
 args = vars(parser.parse_args())
 
 # set up variables
