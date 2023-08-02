@@ -22,10 +22,10 @@ echo $nnUNet_preprocessed
 echo $nnUNet_results
 
 # Plan and preprocess data
-nnUNetv2_plan_and_preprocess -d 701 --verify_dataset_integrity
+nnUNetv2_plan_and_preprocess -d 702 --verify_dataset_integrity
 
 # Train
-nnUNetv2_train 701 3d_fullres 0
+nnUNetv2_train 702 3d_fullres 0
 
 # Inference
 #INPUT_FOLDER=$ROOT_DIR"nnUNet_raw/Dataset200_AMOS/imagesVaSorted"
