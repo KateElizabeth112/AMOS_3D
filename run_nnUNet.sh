@@ -1,10 +1,10 @@
 #!/bin/bash
 # Example of running python script in a batch mode
 #SBATCH -c 4 # Number of CPU Cores
-#SBATCH -p gpus # Partition (queue)
+#SBATCH -p gpushigh # Partition (queue)
 #SBATCH --gres gpu:1 # gpu:n, where n = number of GPUs
 #SBATCH --mem 32G # memory pool for all cores
-#SBATCH --nodelist lory # SLURM node
+#SBATCH --nodelist monal03 # SLURM node
 #SBATCH --output=slurm.%N.%j.log # Standard output and error log
 # Launch virtual environment
 source venv/bin/activate
@@ -22,10 +22,16 @@ echo $nnUNet_preprocessed
 echo $nnUNet_results
 
 # Plan and preprocess data
-nnUNetv2_plan_and_preprocess -d 702 --verify_dataset_integrity
+#nnUNetv2_plan_and_preprocess -d 702 --verify_dataset_integrity
 
 # Train
-nnUNetv2_train 702 3d_fullres 0
+nnUNetv2_train 702 3d_fullres 1
+
+nnUNetv2_train 702 3d_fullres 2
+
+nnUNetv2_train 702 3d_fullres 3
+
+nnUNetv2_train 702 3d_fullres 4
 
 # Inference
 #INPUT_FOLDER=$ROOT_DIR"nnUNet_raw/Dataset200_AMOS/imagesVaSorted"
