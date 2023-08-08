@@ -12,6 +12,7 @@ source venv/bin/activate
 # Set environment variables
 #ROOT_DIR='/Users/katecevora/Documents/PhD/data/AMOS_3D/'
 ROOT_DIR='/vol/biomedic3/kc2322/data/AMOS_3D/'
+DATASET="Dataset701_Set1"
 
 export nnUNet_raw=$ROOT_DIR"nnUNet_raw"
 export nnUNet_preprocessed=$ROOT_DIR"nnUNet_preprocessed"
@@ -28,10 +29,7 @@ nnUNetv2_plan_and_preprocess -d 703 --verify_dataset_integrity
 nnUNetv2_train 703 3d_fullres all
 
 # Inference
-#INPUT_FOLDER=$ROOT_DIR"nnUNet_raw/Dataset200_AMOS/imagesVaSorted"
-#OUTPUT_FOLDER=$ROOT_ROOT"inference/preds"
+INPUT_FOLDER=$ROOT_DIR"nnUNet_raw/Dataset702_Set2/imagesTs"
+OUTPUT_FOLDER=$ROOT_ROOT"inference/Dataset702_Set2/all"
 
-#echo $INPUT_FOLDER
-#echo $OUTPUT_FOLDER
-
-#nnUNetv2_predict -i $INPUT_FOLDER -o $OUTPUT_FOLDER -d 200 -c 2d -f 0 --verbose
+nnUNetv2_predict -i $INPUT_FOLDER -o $OUTPUT_FOLDER -d 702 -c 3d_fullres -f all
