@@ -3,8 +3,14 @@
 #PBS -l select=1:ncpus=4:mem=24gb:ngpus=1:gpu_type=RTX6000
 #PBS -N nnUNet_AMOS
 
+cd ${PBS_O_WORKDIR}
+
 # Launch virtual environment
-source /rds/general/user/kc2322/home/code/AMOS_3D/venv/bin/activate
+module load anaconda3/personal
+source activate  pytorch_env
+
+## Verify install:
+python -c "import torch;print(torch.cuda.is_available())"
 
 # Set environment variables
 ROOT_DIR='/rds/general/user/kc2322/home/data/AMOS_3D/'
