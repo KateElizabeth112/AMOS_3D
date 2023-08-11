@@ -1,9 +1,10 @@
 #!/bin/bash
 #PBS -l walltime=48:00:00
 #PBS -l select=1:ncpus=4:mem=24gb:ngpus=1:gpu_type=RTX6000
+#PBS -N nnUNet_AMOS
 
 # Launch virtual environment
-source /rds/general/user/kc2322/home/data/AMOS_3D/venv/bin/activate
+source /rds/general/user/kc2322/home/code/AMOS_3D/venv/bin/activate
 
 # Set environment variables
 ROOT_DIR='/rds/general/user/kc2322/home/data/AMOS_3D/'
