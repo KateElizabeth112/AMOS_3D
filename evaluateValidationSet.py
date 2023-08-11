@@ -3,7 +3,11 @@ import nibabel as nib
 import os
 import pickle as pkl
 
-root_dir = "/vol/biomedic3/kc2322/data/AMOS_3D"
+local = True
+if local:
+    root_dir = "/Users/katecevora/Documents/PhD/data/AMOS_3D"
+else:
+    root_dir = "/vol/biomedic3/kc2322/data/AMOS_3D"
 task = "Dataset702_Set2"
 fold = "all"
 
@@ -44,8 +48,7 @@ def multiChannelDice(pred, gt, channels):
 
     return np.array(dice)
 
-
-def main():
+def calculate():
     # get a list of male and female IDs
     f = open(os.path.join(root_dir, "splits", "set1_splits.pkl"), "rb")
     set_1_ids = pkl.load(f)
@@ -73,10 +76,16 @@ def main():
             # Get Dice and NSD
             dice = multiChannelDice(pred, gt, n_channels)
 
-            if "s" + case[5:9] in idx_women:
+            print(dice)
+
+            if int(case[5:9]) in idx_women:
+                print("women")
                 dice_women.append(dice)
-            else:
+            elif int(case[5:9]) in idx_men:
+                print("men")
                 dice_men.append(dice)
+            else:
+                print("Not in list")
 
     print("Number of men: {}".format(len(dice_men)))
     print("Number of women: {}".format(len(dice_women)))
@@ -87,9 +96,18 @@ def main():
     av_dice_men = np.nanmean(dice_men, axis=1)
     av_dice_women = np.nanmean(dice_women, axis=1)
 
-    organs = labels.keys()
+    f = open("dice.pkl", "wb")
+    pkl.dump([av_dice_men, av_dice_women], f)
+    f.close()
+
+def main():
+    f = open("dice.pkl", "rb")
+    [av_dice_men, av_dice_women] = pkl.load(f)
+    f.close()
+
+    organs = list(labels.keys())
     for i in range(n_channels):
-        print(organs[i] + ":\t {0:.3f} \t {1:.3f}".format(av_dice_men[i], av_dice_women[i]))
+        print(organs[i] + " & {0:.3f} & {1:.3f} & {2:.3f}".format(av_dice_men[i], av_dice_women[i], av_dice_men[i] - av_dice_women[i]) + r" \\")
 
 
 if __name__ == "__main__":
