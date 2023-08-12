@@ -7,7 +7,7 @@ cd ${PBS_O_WORKDIR}
 
 # Launch virtual environment
 module load anaconda3/personal
-source activate  pytorch_env
+source activate nnUNetv2
 
 ## Verify install:
 python -c "import torch;print(torch.cuda.is_available())"
