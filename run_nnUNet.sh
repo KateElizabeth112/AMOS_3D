@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -l walltime=48:00:00
-#PBS -l select=1:ncpus=4:mem=24gb:ngpus=1:gpu_type=RTX6000
+#PBS -l select=1:ncpus=4:mem=40gb:ngpus=1:gpu_type=RTX6000
 #PBS -N nnUNet_AMOS
 
 cd ${PBS_O_WORKDIR}
@@ -25,7 +25,7 @@ echo $nnUNet_preprocessed
 echo $nnUNet_results
 
 # Plan and preprocess data
-nnUNetv2_plan_and_preprocess -d 701 --verify_dataset_integrity
+nnUNetv2_plan_and_preprocess -d 701 -c 3d_fullres --verify_dataset_integrity
 
 # Train
 nnUNetv2_train 701 3d_fullres all
