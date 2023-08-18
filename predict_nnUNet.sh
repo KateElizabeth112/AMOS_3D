@@ -14,14 +14,14 @@ python -c "import torch;print(torch.cuda.is_available())"
 
 # Set environment variables
 ROOT_DIR='/rds/general/user/kc2322/home/data/AMOS_3D/'
-DATASET="Dataset701_Set1"
+DATASET="Dataset703_Set1"
 
 export nnUNet_raw=$ROOT_DIR"nnUNet_raw"
 export nnUNet_preprocessed=$ROOT_DIR"nnUNet_preprocessed"
 export nnUNet_results=$ROOT_DIR"nnUNet_results"
 
 # Inference
-INPUT_FOLDER=$ROOT_DIR"nnUNet_raw/Dataset701_Set1/imagesTs"
-OUTPUT_FOLDER=$ROOT_DIR"inference/Dataset701_Set1/all"
+INPUT_FOLDER=$ROOT_DIR"nnUNet_raw/Dataset703_Set1/imagesTs"
+OUTPUT_FOLDER=$ROOT_DIR"inference/Dataset703_Set1/all"
 
-nnUNetv2_predict -i $INPUT_FOLDER -o $OUTPUT_FOLDER -d 701 -c 3d_fullres -f all
+nnUNetv2_predict -i $INPUT_FOLDER -o $OUTPUT_FOLDER -d 703 -c 3d_fullres -f all
