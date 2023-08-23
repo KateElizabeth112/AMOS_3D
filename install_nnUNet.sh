@@ -13,3 +13,4 @@ pip install nnunetv2
 pip3 install nibabel
 pip3 install numpy
 pip3 install matplotlib
+pip3 install monai
