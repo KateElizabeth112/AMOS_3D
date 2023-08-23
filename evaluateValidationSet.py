@@ -3,13 +3,22 @@ import nibabel as nib
 import os
 import pickle as pkl
 from monai.metrics import compute_hausdorff_distance
+import argparse
+
+# argparse
+parser = argparse.ArgumentParser(description="Just an example",  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument("-t", "--task", default="Dataset701_Set1", help="Task to evaluate")
+args = vars(parser.parse_args())
+
+# set up variables
+task = args["task"]
 
 local = False
 if local:
     root_dir = "/Users/katecevora/Documents/PhD/data/AMOS_3D"
 else:
     root_dir = "/rds/general/user/kc2322/home/data/AMOS_3D"
-task = "Dataset701_Set1"
+
 fold = "all"
 
 preds_dir = os.path.join(root_dir, "inference", task, fold)
@@ -152,10 +161,18 @@ def main():
     av_dice_women = np.nanmean(metrics["dice_women"], axis=1)
     std_dice_women = np.nanstd(metrics["dice_women"], axis=1)
 
-    av_hd_men = np.nanmean(metrics["hd_men"], axis=1)
-    std_hd_men = np.nanstd(metrics["hd_men"], axis=1)
-    av_hd_women = np.nanmean(metrics["hd_women"], axis=1)
-    std_hd_women = np.nanstd(metrics["hd_women"], axis=1)
+    # Hausdorff
+    hd_men = np.squeeze(metrics["hd_men"])
+    hd_women = np.squeeze(metrics["hd_women"])
+
+    # Replace infs with nans so we can compute average using nanmean
+    hd_men[hd_men==np.inf] = np.nan
+    hd_women[hd_women==np.inf] = np.nan
+
+    av_hd_men = np.nanmean(hd_men, axis=1)
+    std_hd_men = np.nanstd(hd_men, axis=1)
+    av_hd_women = np.nanmean(hd_women, axis=1)
+    std_hd_women = np.nanstd(hd_women, axis=1)
 
     organs = list(labels.keys())
     for i in range(n_channels):
