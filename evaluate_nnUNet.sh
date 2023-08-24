@@ -9,4 +9,4 @@ cd ${PBS_O_WORKDIR}
 module load anaconda3/personal
 source activate nnUNetv2
 
-python3 evaluateValidationSet.py -t "Dataset701_Set1"
+python3 evaluateValidationSet.py -t "Dataset702_Set2"

@@ -149,7 +149,7 @@ def calculateMetrics():
 
 
 def main():
-    #calculateMetrics()
+    calculateMetrics()
 
     f = open(os.path.join(preds_dir, "dice_and_hd.pkl"), "rb")
     metrics = pkl.load(f)
