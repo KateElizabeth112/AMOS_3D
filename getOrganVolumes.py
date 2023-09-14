@@ -5,6 +5,7 @@ import nibabel as nib
 import numpy as np
 import pandas as pd
 import pickle as pkl
+import matplotlib.pyplot as plt
 
 local = False
 
@@ -80,12 +81,34 @@ def calculate_volumes():
 
     # Save the volumes ready for further processing
     f = open(os.path.join(root_dir, "volumes_gender.pkl"), "wb")
-    pkl.dump([np.array(volumes_m), np.array(volumes_m)], f)
+    pkl.dump([np.array(volumes_m), np.array(volumes_f)], f)
     f.close()
+
+
+def plotVolumes():
+    f = open(os.path.join(root_dir, "volumes_gender.pkl"), "rb")
+    [volumes_m, volumes_f] = pkl.load(f)
+    f.close()
+
+    # For each organ, plot the volume distributions
+    organs = list(labels.keys())
+
+    for i in range(1, len(labels)):
+        organ = organs[i]
+        plt.clf()
+        plt.hist(volumes_m[:, i], label="Male")
+        plt.hist(volumes_f[:, i], label="Female")
+        plt.legend()
+        plt.title(organ)
+        plt.show()
+
+
 
 
 def main():
     calculate_volumes()
+    #plotVolumes()
+
 
 
 if __name__ == "__main__":
