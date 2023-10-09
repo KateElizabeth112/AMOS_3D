@@ -17,6 +17,7 @@ output_folder = os.path.join(root_folder, "nnUNet_raw")
 input_images_folder = os.path.join(input_folder, "imagesTr")
 input_labels_folder = os.path.join(input_folder, "labelsTr")
 splits_folder = os.path.join(root_folder, "splits")
+meta_data_path = os.path.join(root_folder, "labeled_data_meta_0000_0599.csv")
 
 def saveDatasetInfo():
     # open metadata
