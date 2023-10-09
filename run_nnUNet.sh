@@ -15,8 +15,7 @@ python -c "import torch;print(torch.cuda.is_available())"
 # Set environment variables
 ROOT_DIR='/rds/general/user/kc2322/home/data/AMOS_3D/'
 DATASET='Dataset501_Fold0'
-TASK=601
-
+TASK=501
 
 export nnUNet_raw=$ROOT_DIR"nnUNet_raw"
 export nnUNet_preprocessed=$ROOT_DIR"nnUNet_preprocessed"
@@ -27,7 +26,7 @@ echo $nnUNet_preprocessed
 echo $nnUNet_results
 
 # Create dataset.json
-python3 generateDatasetJson.py -r $ROOT_DIR -n $DATASET -tc 304
+python3 generateDatasetJson.py -r $ROOT_DIR -n $DATASET -tc 120
 
 # Plan and preprocess data
 nnUNetv2_plan_and_preprocess -d $TASK -c 3d_fullres -np 3 --verify_dataset_integrity
