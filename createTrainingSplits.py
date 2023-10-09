@@ -171,8 +171,8 @@ def copy_images(dataset_name, ids_tr, ids_ts):
     # copy over the files from Training Set
     for case in list(ids_tr):
         print("Case {}".format(case))
-        img_name = "case_" + case + "_0000.nii.gz"
-        lab_name = "case_" + case + ".nii.gz"
+        img_name = "amos_" + case + "_0000.nii.gz"
+        lab_name = "amos_" + case + ".nii.gz"
 
         # Copy across images
         shutil.copyfile(os.path.join(input_images_folder, img_name), os.path.join(output_imagesTr, img_name))
@@ -182,8 +182,8 @@ def copy_images(dataset_name, ids_tr, ids_ts):
 
     # copy over the files from Test Set
     for case in list(ids_ts):
-        img_name = "case_" + case + "_0000.nii.gz"
-        lab_name = "case_" + case + ".nii.gz"
+        img_name = "amos_" + case + "_0000.nii.gz"
+        lab_name = "amos_" + case + ".nii.gz"
 
         # Copy across images
         shutil.copyfile(os.path.join(input_images_folder, img_name), os.path.join(output_imagesTs, img_name))
@@ -193,8 +193,8 @@ def copy_images(dataset_name, ids_tr, ids_ts):
 
 
 def main():
-    saveDatasetInfo()
-    generate_folds()
+    #saveDatasetInfo()
+    #generate_folds()
 
     # Sort the case IDs according to the sets
     folds = [0, 1, 2, 3, 4]
