@@ -50,6 +50,7 @@ def saveDatasetInfo():
         if image.endswith(".nii.gz"):
             # Find the gender of the subject from the metadata
             id = image[5:9]
+            print(id)
             x = np.where(patients == id)[0][0]
             patients_tr.append(id)
             if sex_mf[x] == "M":
