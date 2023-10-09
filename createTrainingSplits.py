@@ -113,9 +113,9 @@ def generate_folds():
     set_2_ids = {"train": tr2, "test": ts}
     set_3_ids = {"train": tr3, "test": ts}
 
-    f = open(os.path.join(splits_folder, "fold_0.pkl"), "wb")
-    pkl.dump([set_1_ids, set_2_ids, set_3_ids], f)
-    f.close()
+    #f = open(os.path.join(splits_folder, "fold_0.pkl"), "wb")
+    #pkl.dump([set_1_ids, set_2_ids, set_3_ids], f)
+    #f.close()
 
     print(tr1.shape, tr2.shape, tr3.shape, ts.shape)
 
@@ -132,9 +132,9 @@ def generate_folds():
         set_2_ids = {"train": tr2, "test": ts}
         set_3_ids = {"train": tr3, "test": ts}
 
-        f = open(os.path.join(splits_folder, "fold_{}.pkl".format(f)), "wb")
-        pkl.dump([set_1_ids, set_2_ids, set_3_ids], f)
-        f.close()
+        #f = open(os.path.join(splits_folder, "fold_{}.pkl".format(f)), "wb")
+        #pkl.dump([set_1_ids, set_2_ids, set_3_ids], f)
+        #f.close()
 
         print(tr1.shape, tr2.shape, tr3.shape, ts.shape)
 
@@ -150,9 +150,9 @@ def generate_folds():
     set_2_ids = {"train": tr2, "test": ts}
     set_3_ids = {"train": tr3, "test": ts}
 
-    f = open(os.path.join(splits_folder, "fold_4.pkl"), "wb")
-    pkl.dump([set_1_ids, set_2_ids, set_3_ids], f)
-    f.close()
+    #f = open(os.path.join(splits_folder, "fold_4.pkl"), "wb")
+    #pkl.dump([set_1_ids, set_2_ids, set_3_ids], f)
+    #f.close()
 
 
 def copy_images(dataset_name, ids_tr, ids_ts):
@@ -192,10 +192,7 @@ def copy_images(dataset_name, ids_tr, ids_ts):
         shutil.copyfile(os.path.join(input_labels_folder, lab_name), os.path.join(output_labelsTs, lab_name))
 
 
-def main():
-    #saveDatasetInfo()
-    #generate_folds()
-
+def sort():
     # Sort the case IDs according to the sets
     folds = [0, 1, 2, 3, 4]
 
@@ -213,6 +210,10 @@ def main():
             print("Working on Set {}....".format(name))
             copy_images(name, ids_tr, ids_ts)
 
+
+def main():
+    #saveDatasetInfo()
+    generate_folds()
 
 
 if __name__ == "__main__":
