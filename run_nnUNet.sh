@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -l walltime=48:00:00
 #PBS -l select=1:ncpus=12:mem=100gb:ngpus=1:gpu_type=RTX6000
-#PBS -N nnUNet_AMOS_502
+#PBS -N nnUNet_AMOS_901
 
 cd ${PBS_O_WORKDIR}
 
@@ -14,8 +14,8 @@ python -c "import torch;print(torch.cuda.is_available())"
 
 # Set environment variables
 ROOT_DIR='/rds/general/user/kc2322/home/data/AMOS_3D/'
-DATASET='Dataset502_Fold0'
-TASK=502
+DATASET='Dataset901_Fold4'
+TASK=901
 
 export nnUNet_raw=$ROOT_DIR"nnUNet_raw"
 export nnUNet_preprocessed=$ROOT_DIR"nnUNet_preprocessed"
@@ -26,10 +26,10 @@ echo $nnUNet_preprocessed
 echo $nnUNet_results
 
 # Create dataset.json
-#python3 generateDatasetJson.py -r $ROOT_DIR -n $DATASET -tc 120
+python3 generateDatasetJson.py -r $ROOT_DIR -n $DATASET -tc 120
 
 # Plan and preprocess data
-#nnUNetv2_plan_and_preprocess -d $TASK -c 3d_fullres -np 3 --verify_dataset_integrity
+nnUNetv2_plan_and_preprocess -d $TASK -c 3d_fullres -np 3 --verify_dataset_integrity
 
 # Train
 nnUNetv2_train $TASK 3d_fullres all
