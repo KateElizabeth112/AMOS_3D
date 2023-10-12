@@ -14,14 +14,29 @@ python -c "import torch;print(torch.cuda.is_available())"
 
 # Set environment variables
 ROOT_DIR='/rds/general/user/kc2322/home/data/AMOS_3D/'
-DATASET="Dataset703_Set3"
+
+datasets=("Dataset500_Fold0" "Dataset501_Fold0" "Dataset502_Fold0")
+tasks=(500 501 502)
 
 export nnUNet_raw=$ROOT_DIR"nnUNet_raw"
 export nnUNet_preprocessed=$ROOT_DIR"nnUNet_preprocessed"
 export nnUNet_results=$ROOT_DIR"nnUNet_results"
 
-# Inference
-INPUT_FOLDER=$ROOT_DIR"nnUNet_raw/Dataset703_Set3/imagesTs"
-OUTPUT_FOLDER=$ROOT_DIR"inference/Dataset703_Set3/all"
+for number in {0..2}; do
+    DATASET=${datasets[number]}
+    TASK=${tasks[number]}
 
-nnUNetv2_predict -i $INPUT_FOLDER -o $OUTPUT_FOLDER -d 703 -c 3d_fullres -f all
+    # Inference
+    INPUT_FOLDER=$ROOT_DIR"nnUNet_raw/"$DATASET"/imagesTs"
+    OUTPUT_FOLDER=$ROOT_DIR"inference/"$DATASET"/all"
+
+    echo $TASK
+    echo $DATASET
+    echo $INPUT_FOLDER
+    echo $OUTPUT_FOLDER
+
+    nnUNetv2_predict -i $INPUT_FOLDER -o $OUTPUT_FOLDER -d $TASK -c 3d_fullres -f all -chk checkpoint_best.pth
+
+    # Run python script to evaluate results
+    python3 processResults.py -d $DATASET
+done

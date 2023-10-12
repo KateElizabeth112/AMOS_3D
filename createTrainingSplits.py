@@ -19,6 +19,7 @@ input_labels_folder = os.path.join(input_folder, "labelsTr")
 splits_folder = os.path.join(root_folder, "splits")
 meta_data_path = os.path.join(root_folder, "labeled_data_meta_0000_0599.csv")
 
+
 def saveDatasetInfo():
     # open metadata
     df = pd.read_csv(meta_data_path)
