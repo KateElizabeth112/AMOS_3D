@@ -14,7 +14,7 @@ python -c "import torch;print(torch.cuda.is_available())"
 
 # Set environment variables
 ROOT_DIR='/rds/general/user/kc2322/home/data/AMOS_3D/'
-DATASET='Dataset800_Fold2'
+DATASET='Dataset800_Fold3'
 TASK=800
 
 export nnUNet_raw=$ROOT_DIR"nnUNet_raw"
