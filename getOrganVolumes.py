@@ -308,15 +308,21 @@ def significanceTesting():
         res = stats.ttest_ind(volumes_m[:, i-1], volumes_f[:, i-1], equal_var=False)
 
         # save difference in mean, difference in mean as a proportion of the average volume, and p-value
-        print("{0}: {1:.0f} mm^3, {2:.2f} %, p-value {3:.2f}".format(organ, v_diff, v_diff_prop, res[1]))
+        if res[1] < 0.01:
+            sig = "**"
+        elif res[1] < 0.05:
+            sig = "*"
+        else:
+            sig = ""
+        print("{0} & {1:.0f} {2} & {3:.2f} {4} ".format(organ, v_diff, sig, v_diff_prop, sig) + r"\\")
 
 
 
 def main():
     #calculate_volumes()
     #plotVolumesBoxAndWhiskers()
-    boxPlotSeaborn()
-    #significanceTesting()
+    #boxPlotSeaborn()
+    significanceTesting()
 
 
 
