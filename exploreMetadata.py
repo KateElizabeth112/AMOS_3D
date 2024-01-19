@@ -5,7 +5,7 @@ import os
 import pickle as pkl
 import shutil
 
-local = True
+local = False
 
 if local:
     root_dir = "/Users/katecevora/Documents/PhD/data/AMOS_3D"
