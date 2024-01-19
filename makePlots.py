@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
 from scipy import stats
 
-root_dir = "/Users/katecevora/Documents/PhD/data/AMOS_3D"
+root_dir =  "/Users/katecevora/Documents/PhD/data/AMOS_3D"
 
 lblu = "#add9f4"
 lred = "#f36860"
@@ -29,6 +29,18 @@ labels = {"background": 0,
           "prostate/uterus": 15}
 
 n_channels = int(len(labels))
+
+
+def significanceThreshold(p):
+    # Test significance and return *, **, or blank
+    if p <= 0.01:
+        sig = "**"
+    elif p <= 0.05:
+        sig = "*"
+    else:
+        sig = ""
+
+    return sig
 
 
 def plotDice(dice_men1, dice_women1, dice_men2, dice_women2, dice_men3, dice_women3, organ, save_path):
@@ -122,7 +134,7 @@ def printDice(dice_men1, dice_women1, dice_men2, dice_women2, dice_men3, dice_wo
     # Calculate the deltas from the baseline experiment
     organs = list(labels.keys())
 
-    for i in range(1, n_channels - 1):
+    for i in range(1, n_channels):
         organ = organs[i]
 
         # Delete NaNs
@@ -137,39 +149,53 @@ def printDice(dice_men1, dice_women1, dice_men2, dice_women2, dice_men3, dice_wo
         av_dice_men1 = np.mean(dice_men1_i)
         av_dice_women1 = np.mean(dice_women1_i)
 
+        # look at difference between men and women
+        delta_1 = ((av_dice_men1 - av_dice_women1) / np.mean((av_dice_men1, av_dice_women1))) * 100
+        (_, p_1) = stats.ttest_ind(dice_men1_i, dice_women1_i, equal_var=False)
+
         # Experiment 2 (all female training set)
         av_dice_men2 = np.mean(dice_men2_i)
         av_dice_women2 = np.mean(dice_women2_i)
 
-        delta_men2 = (av_dice_men1 - av_dice_men2) * 100
-        delta_women2 = (av_dice_women1 - av_dice_women2) * 100
+        delta_men2 = -((av_dice_men1 - av_dice_men2) / np.mean((av_dice_men1, av_dice_men2))) * 100
+        delta_women2 = -((av_dice_women1 - av_dice_women2) / np.mean((av_dice_women1, av_dice_women2))) * 100
 
         (_, p_men2) = stats.ttest_ind(dice_men1_i, dice_men2_i, equal_var=False)
         (_, p_women2) = stats.ttest_ind(dice_women1_i, dice_women2_i, equal_var=False)
+
 
         # Experiment 3 (male training set)
         av_dice_men3 = np.mean(dice_men3_i)
         av_dice_women3 = np.mean(dice_women3_i)
 
-        delta_men3 = (av_dice_men1 - av_dice_men3) * 100
-        delta_women3 = (av_dice_women1 - av_dice_women3) * 100
+        delta_men3 = -((av_dice_men1 - av_dice_men3) / np.mean((av_dice_men1, av_dice_men3))) * 100
+        delta_women3 = -((av_dice_women1 - av_dice_women3) / np.mean((av_dice_women1, av_dice_women3))) * 100
 
         (_, p_men3) = stats.ttest_ind(dice_men1_i, dice_men3_i, equal_var=False)
         (_, p_women3) = stats.ttest_ind(dice_women1_i, dice_women3_i, equal_var=False)
 
-        print(organ + " {0:2f} ({1:2f}) % {2:2f} ({3:.2f}) % {4:2f} ({5:.2f}) % {6:.2f} ({7:.2f})".format(delta_men2,
-                                                                                                          p_men2,
-                                                                                                          delta_men3,
-                                                                                                          p_men3,
-                                                                                                          delta_women2,
-                                                                                                          p_women2,
-                                                                                                          delta_women3,
-                                                                                                          p_men3))
+        # Get significance thresholds as *'s
+        sig_1 = significanceThreshold(p_1)
+        sig_men2 = significanceThreshold(p_men2)
+        sig_women2 = significanceThreshold(p_women2)
+        sig_men3 = significanceThreshold(p_men3)
+        sig_women3 = significanceThreshold(p_women3)
+
+        print(organ + " & {0:.2f} {1} & {2:.2f} {3} & {4:.2f} {5} & {6:.2f} {7} & {8:.2f} {9}".format(delta_1,
+                                                                                                      sig_1,
+                                                                                                      delta_men2,
+                                                                                                      sig_men2,
+                                                                                                      delta_men3,
+                                                                                                      sig_men3,
+                                                                                                      delta_women2,
+                                                                                                      sig_women2,
+                                                                                                      delta_women3,
+                                                                                                      sig_women3) + r" \\")
 
 
-def main():
+
+def plot(experiments = ["Dataset501_Fold0", "Dataset502_Fold0", "Dataset503_Fold0"]):
     # first get relevant metrics from all three experiments
-    experiments = ["Dataset701_Set1", "Dataset702_Set2", "Dataset703_Set3"]
 
     # Experiment 1
     f = open(os.path.join(root_dir, "inference", experiments[0], "all", "dice_and_hd.pkl"), "rb")
@@ -194,7 +220,7 @@ def main():
 
     dice_men3 = metrics3["dice_men"]
     dice_women3 = metrics3["dice_women"]
-    """
+
     # Now make some plots
     organs = list(labels.keys())
 
@@ -204,7 +230,7 @@ def main():
         if organ == "prostate/uterus":
             organ = "prostate or uterus"
 
-        save_path = os.path.join(root_dir, "plots", "{}_dice.png".format(organ))
+        save_path = os.path.join(root_dir, "plots", "Final", "{}_dice.png".format(organ))
 
         plotDice(dice_men1[:, i],
                  dice_women1[:, i],
@@ -214,10 +240,83 @@ def main():
                  dice_women3[:, i],
                  organ,
                  save_path)
-    """
+
     # Now process dice scores for all three experiments into a tabular format
     printDice(dice_men1, dice_women1, dice_men2, dice_women2, dice_men3, dice_women3)
 
+
+
+def pullFoldsTogether():
+    # Combine results from all folds
+    # iterate over folds
+    for fold in range(5):
+        experiments = ["Dataset{}00_Fold{}".format((5+fold), fold),
+                       "Dataset{}01_Fold{}".format((5+fold), fold),
+                       "Dataset{}02_Fold{}".format((5+fold), fold)]
+
+        # Experiment 1
+        f = open(os.path.join(root_dir, "inference", experiments[0], "all", "dice_and_hd.pkl"), "rb")
+        metrics1 = pkl.load(f)
+        f.close()
+
+        # Experiment 2
+        f = open(os.path.join(root_dir, "inference", experiments[1], "all", "dice_and_hd.pkl"), "rb")
+        metrics2 = pkl.load(f)
+        f.close()
+
+        # Experiment 3
+        f = open(os.path.join(root_dir, "inference", experiments[2], "all", "dice_and_hd.pkl"), "rb")
+        metrics3 = pkl.load(f)
+        f.close()
+
+        if fold == 0:
+            dice_men1 = metrics1["dice_men"]
+            dice_women1 = metrics1["dice_women"]
+            dice_men2 = metrics2["dice_men"]
+            dice_women2 = metrics2["dice_women"]
+            dice_men3 = metrics3["dice_men"]
+            dice_women3 = metrics3["dice_women"]
+        else:
+            dice_men1 = np.concatenate((dice_men1, metrics1["dice_men"]), axis=0)
+            dice_women1 = np.concatenate((dice_women1, metrics1["dice_women"]), axis=0)
+            dice_men2 = np.concatenate((dice_men2, metrics2["dice_men"]), axis=0)
+            dice_women2 = np.concatenate((dice_women2, metrics2["dice_women"]), axis=0)
+            dice_men3 = np.concatenate((dice_men3, metrics3["dice_men"]), axis=0)
+            dice_women3 = np.concatenate((dice_women3, metrics3["dice_women"]), axis=0)
+
+    # Save results
+    if not os.path.exists(os.path.join(root_dir, "inference", "Dataset1_FoldAll")):
+        os.mkdir(os.path.join(root_dir, "inference", "Dataset1_FoldAll"))
+        os.mkdir(os.path.join(root_dir, "inference", "Dataset1_FoldAll", "all"))
+
+    if not os.path.exists(os.path.join(root_dir, "inference", "Dataset2_FoldAll")):
+        os.mkdir(os.path.join(root_dir, "inference", "Dataset2_FoldAll"))
+        os.mkdir(os.path.join(root_dir, "inference", "Dataset2_FoldAll", "all"))
+
+    if not os.path.exists(os.path.join(root_dir, "inference", "Dataset3_FoldAll")):
+        os.mkdir(os.path.join(root_dir, "inference", "Dataset3_FoldAll"))
+        os.mkdir(os.path.join(root_dir, "inference", "Dataset3_FoldAll", "all"))
+
+    f = open(os.path.join(root_dir, "inference", "Dataset1_FoldAll", "all", "dice_and_hd.pkl"), "wb")
+    pkl.dump({"dice_men": dice_men1, "dice_women": dice_women1}, f)
+    f.close()
+
+    f = open(os.path.join(root_dir, "inference", "Dataset2_FoldAll", "all", "dice_and_hd.pkl"), "wb")
+    pkl.dump({"dice_men": dice_men2, "dice_women": dice_women2}, f)
+    f.close()
+
+    f = open(os.path.join(root_dir, "inference", "Dataset3_FoldAll", "all", "dice_and_hd.pkl"), "wb")
+    pkl.dump({"dice_men": dice_men3, "dice_women": dice_women3}, f)
+    f.close()
+
+    printDice(dice_men1, dice_women1, dice_men2, dice_women2, dice_men3, dice_women3)
+
+
+
+def main():
+    pullFoldsTogether()
+
+    #plot(experiments=["Dataset1_FoldAll", "Dataset2_FoldAll", "Dataset3_FoldAll"])
 
 
 if __name__ == "__main__":

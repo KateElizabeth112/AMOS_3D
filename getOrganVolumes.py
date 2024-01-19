@@ -318,11 +318,34 @@ def significanceTesting():
 
 
 
+def plotOrganVolumeDistribution():
+    f = open(os.path.join(root_dir, "volumes_gender.pkl"), "rb")
+    [volumes_m, volumes_f] = pkl.load(f)
+    f.close()
+
+    volumes = np.vstack((volumes_m, volumes_f))
+
+    # For each organ, plot the volume distributions. Ignore background
+    organs = list(labels.keys())
+
+    for i in range(1, len(labels)):
+        organ = organs[i]
+        volumes_i = volumes_m[:, i-1]
+
+        # calculate median
+        med = np.median(volumes_i) / 1000
+        per_25 = np.percentile(volumes_i, 25) / 1000
+        per_75 = np.percentile(volumes_i, 75) / 1000
+
+        print("{0}: {1:.0f} ({2:.0f} - {3:.0f})".format(organ, med, per_25, per_75))
+
+
 def main():
     #calculate_volumes()
     #plotVolumesBoxAndWhiskers()
     #boxPlotSeaborn()
-    significanceTesting()
+    #significanceTesting()
+    plotOrganVolumeDistribution()
 
 
 

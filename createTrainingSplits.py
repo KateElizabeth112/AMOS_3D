@@ -1,4 +1,4 @@
-# A script to create train/test splits from the total segmentator dataset
+# A script to create train/test splits from the total amos dataset
 import pandas as pd
 import numpy as np
 import os

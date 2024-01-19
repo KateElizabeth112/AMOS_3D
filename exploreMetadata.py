@@ -28,9 +28,14 @@ def saveDatasetInfo():
 
     amos_id = df["amos_id"].values
     sex_mf = df["Patient's Sex"].values
+    scanner = df["Manufacturer's Model Name"].values
+    site = df["Site"].values
+
     patients = []
     genders = []
     patients_tr = []
+    scanner_tr = []
+    site_tr = []
 
     # Change the patient ID to be a 4-character string with zero padding where necessary
     for id in amos_id:
@@ -46,6 +51,7 @@ def saveDatasetInfo():
 
     patients = np.array(patients)
 
+    # cycle over images in the training set folder and extract relevant metadata
     for image in images:
         if image.endswith(".nii.gz"):
             # Find the gender of the subject from the metadata
@@ -57,12 +63,19 @@ def saveDatasetInfo():
             elif sex_mf[x] == "F":
                 genders.append(1)
 
+            scanner_tr = scanner[x]
+            site_tr = site[x]
+
     genders = np.array(genders)
     patients_tr = np.array(patients_tr)
+    scanner_tr = np.array(scanner_tr)
+    site_tr = np.array(site_tr)
 
     # Save lists
     info = {"patients": patients_tr,
-            "genders": genders}
+            "genders": genders,
+            "scanner": scanner_tr,
+            "site": site_tr}
 
     f = open(os.path.join(input_folder, "info.pkl"), "wb")
     pkl.dump(info, f)
